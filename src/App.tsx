@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import * as C from './App.styles';
+import * as Photos from './services/photos';
+import { Photo } from './types/Photo'
 
-function App() {
+const App = () => {
+  const [loading, setLoading] = useState(false);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+
+  useEffect(()=>{
+    const getPhotos = async () => {
+      setLoading(true);
+      setPhotos(await Photos.getAll());
+      setLoading(false);
+    }
+    getPhotos();
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <C.Container>
+      <C.Area>
+        <C.Header>Galeria de Fotos</C.Header>
+
+        {/*area de upload*/}
+
+        {/*lista de fotos */}
+      </C.Area>
+    </C.Container>
   );
 }
 
-export default App;
+export default App
